@@ -1,5 +1,6 @@
 import dayjs from "dayjs";
-import { db, schemaTransacao } from "../app.js";
+import { schemaTransacao } from "../schemas/transacao.schemas.js";
+import { db } from "../database/database.connection.js";
 
 export async function novaTransacao(req, res) {
     const { tipo } = req.params;

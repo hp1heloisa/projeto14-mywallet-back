@@ -1,6 +1,7 @@
-import { db, schemaCadastro, schemaLogin } from "../app.js";
+import { schemaCadastro, schemaLogin } from "../schemas/user.schemas.js";
 import bcrypt from "bcrypt";
 import { v4 as uuid } from "uuid";
+import { db } from "../database/database.connection.js";
 
 export async function cadastro(req, res) {
     const validation = schemaCadastro.validate(req.body, {abortEarly: false});
