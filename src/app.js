@@ -12,7 +12,7 @@ app.use(cors());
 app.use(json());
 dotenv.config();
 
-const mongoClient = new MongoClient(process.env.URL_BASE);
+const mongoClient = new MongoClient(process.env.DATABASE_URL);
 
 try {
     await mongoClient.connect();
@@ -47,5 +47,5 @@ app.post("/nova-transacao/:tipo", novaTransacao);
 
 app.get("/transacoes", transacoes);
 
-const PORT = 5005;
-app.listen(PORT, () => console.log(`Servidor está rodando na porta ${PORT}`));
+const port = process.env.PORT || 5005;
+app.listen(port, () => console.log(`Servidor está rodando na porta ${port}`));
