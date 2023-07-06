@@ -34,7 +34,7 @@ export async function login(req, res) {
         if (!senhaOk) return res.sendStatus(401);
         const token = uuid();
         await db.collection("sessao").insertOne({idUsuario: emailOk._id, token});
-        res.status(200).send(token);
+        res.status(200).send({nome: emailOk.nome, token});
     } catch (error) {
         res.status(500).send(error.message);
     }
