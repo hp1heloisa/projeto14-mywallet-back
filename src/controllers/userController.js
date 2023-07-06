@@ -23,7 +23,7 @@ export async function novaTransacao(req, res) {
             tipo,
             valor,
             descricao,
-            data: dayjs().format('DD-MM-YYYY HH:mm:ss')
+            data: dayjs().format('DD/MM')
         })
         res.sendStatus(201);
     } catch (error) {
