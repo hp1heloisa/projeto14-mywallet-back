@@ -3,7 +3,7 @@ import { cadastro, login } from "../controllers/authController.js";
 
 const userRouter = Router();
  
-userRouter.app.post("/cadastro", cadastro);
-userRouter.app.post("/login", login);
+userRouter.post("/cadastro", cadastro);
+userRouter.post("/login", login);
 
 export default userRouter;
