@@ -35,7 +35,7 @@ export async function deletar(req, res) {
     const { id } = req.body;
     try {
         const del = await db.collection("transacoes").deleteOne({_id: new ObjectId(id)});
-        res.send(del)
+        res.sendStatus(200);
     } catch (error) {
         res.status(500).send(error.message);
     }
