@@ -22,6 +22,7 @@ export async function novaTransacao(req, res) {
 }
 
 export async function transacoes(req, res) {
+    console.log(res.locals.tokenOk);
     try {
         const transacoes = await db.collection("transacoes").find({idUsuario: res.locals.tokenOk.idUsuario}).toArray();
         res.send(transacoes);

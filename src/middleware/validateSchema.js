@@ -3,7 +3,7 @@ export function validateSchema(schema) {
         const { tipo } = req.params;
         let validation;
         if (tipo){
-            validation = schemaTransacao.validate({...req.body, tipo}, {abortEarly: false});
+            validation = schema.validate({...req.body, tipo}, {abortEarly: false});
         } else{
             validation = schema.validate(req.body, {abortEarly: false});
         }

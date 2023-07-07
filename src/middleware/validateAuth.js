@@ -8,7 +8,7 @@ export async function validateAuth(req, res, next) {
     try {
         tokenOk = await db.collection("sessao").findOne({token});
         if (!tokenOk) return res.sendStatus(401);
-    } catch  (error) {
+    } catch (error) {
         res.status(500).send(error.message);
     }
     res.locals.tokenOk = tokenOk;
