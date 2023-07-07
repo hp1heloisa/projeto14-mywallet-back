@@ -1,22 +1,11 @@
 import dayjs from "dayjs";
-import { schemaTransacao } from "../schemas/transacao.schemas.js";
 import { db } from "../database/database.connection.js";
 
 export async function novaTransacao(req, res) {
     const { tipo } = req.params;
-    const { authorization } = req.headers;
-    const token = authorization?.replace("Bearer ", "");
-    if (!token) return res.sendStatus(401);
-    const validation = schemaTransacao.validate({...req.body, tipo});
-    if (validation.error){
-        const erros = validation.error.details.map(erro => erro.message);
-        return res.status(422).send(erros);
-    }
     try {
-        const tokenOk = await db.collection("sessao").findOne({token});
-        if (!tokenOk) return res.sendStatus(401);
         const { valor, descricao } = req.body;
-        const usuario = await db.collection("cadastrados").findOne({_id: tokenOk.idUsuario});
+        const usuario = await db.collection("cadastrados").findOne({_id: res.locals.tokenOk.idUsuario});
         await db.collection("transacoes").insertOne({
             idUsuario: usuario._id,
             nome: usuario.nome,
@@ -33,13 +22,8 @@ export async function novaTransacao(req, res) {
 }
 
 export async function transacoes(req, res) {
-    const { authorization } = req.headers;
-    const token = authorization?.replace("Bearer ", "");
-    if (!token) return res.sendStatus(401);
     try {
-        const tokenOk = await db.collection("sessao").findOne({token});
-        if (!tokenOk) return res.sendStatus(401);
-        const transacoes = await db.collection("transacoes").find({idUsuario: tokenOk.idUsuario}).toArray();
+        const transacoes = await db.collection("transacoes").find({idUsuario: res.locals.tokenOk.idUsuario}).toArray();
         res.send(transacoes);
     } catch (error) {
         res.status(500).send(error.message);

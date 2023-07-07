@@ -4,11 +4,6 @@ import { v4 as uuid } from "uuid";
 import { db } from "../database/database.connection.js";
 
 export async function cadastro(req, res) {
-    const validation = schemaCadastro.validate(req.body, {abortEarly: false});
-    if (validation.error){
-        const erros = validation.error.details.map(erro => erro.message);
-        return res.status(422).send(erros);
-    }
     try {
         const { nome, email, senha } = req.body;
         const emailOk = await db.collection("cadastrados").findOne({email});
@@ -22,11 +17,6 @@ export async function cadastro(req, res) {
 }
 
 export async function login(req, res) {
-    const validation = schemaLogin.validate(req.body, {abortEarly: false});
-    if (validation.error){
-        const erros = validation.error.details.map(erro => erro.message);
-        return res.status(422).send(erros);
-    }
     try {
         const { email, senha } = req.body;
         const emailOk = await db.collection("cadastrados").findOne({email});
