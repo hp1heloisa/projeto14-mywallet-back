@@ -1,4 +1,5 @@
 import dayjs from "dayjs";
+import { ObjectId } from "mongodb";
 import { db } from "../database/database.connection.js";
 
 export async function novaTransacao(req, res) {
@@ -22,10 +23,19 @@ export async function novaTransacao(req, res) {
 }
 
 export async function transacoes(req, res) {
-    console.log(res.locals.tokenOk);
     try {
         const transacoes = await db.collection("transacoes").find({idUsuario: res.locals.tokenOk.idUsuario}).toArray();
         res.send(transacoes);
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
+}
+
+export async function deletar(req, res) {
+    const { id } = req.body;
+    try {
+        const del = await db.collection("transacoes").deleteOne({_id: new ObjectId(id)});
+        res.send(del)
     } catch (error) {
         res.status(500).send(error.message);
     }
