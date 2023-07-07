@@ -1,3 +1,5 @@
+import { db } from "../database/database.connection";
+
 export async function validateAuth(req, res, next) {
     let tokenOk;
     const { authorization } = req.headers;
