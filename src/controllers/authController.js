@@ -1,4 +1,3 @@
-import { schemaCadastro, schemaLogin } from "../schemas/user.schemas.js";
 import bcrypt from "bcrypt";
 import { v4 as uuid } from "uuid";
 import { db } from "../database/database.connection.js";
