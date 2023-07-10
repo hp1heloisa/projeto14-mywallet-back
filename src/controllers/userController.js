@@ -43,3 +43,18 @@ export async function deletar(req, res) {
         res.status(500).send(error.message);
     }
 }
+
+export async function editaTransacao(req, res) {
+    console.log(req.body);
+    console.log(req.params);
+    const { id } = req.params;
+    try {
+        await db.collection("transacoes").updateOne(
+            {_id: new ObjectId(id)},
+            {$set: req.body}
+        )
+        res.sendStatus(200);
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
+}
