@@ -25,6 +25,9 @@ export async function novaTransacao(req, res) {
 export async function transacoes(req, res) {
     try {
         const transacoes = await db.collection("transacoes").find({idUsuario: res.locals.tokenOk.idUsuario}).toArray();
+        transacoes.forEach(transacao => {
+            transacao.valor = Number(transacao.valor).toFixed(2);
+        })
         res.send(transacoes);
     } catch (error) {
         res.status(500).send(error.message);
