@@ -24,7 +24,7 @@ export async function novaTransacao(req, res) {
 
 export async function transacoes(req, res) {
     try {
-        const transacoes = await db.collection("transacoes").find({idUsuario: res.locals.tokenOk.idUsuario}).toArray();
+        const transacoes = await db.collection("transacoes").find({idUsuario: res.locals.tokenOk.idUsuario}).sort({$natural:-1}).toArray();
         transacoes.forEach(transacao => {
             transacao.valor = Number(transacao.valor).toFixed(2);
         })
